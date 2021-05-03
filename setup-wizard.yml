@@ -1,0 +1,9 @@
+version: "2"
+fields:
+  - id: MONKIER
+    target:
+      type: environment
+      name: MONKIER
+    title: Node Name
+    description: >-
+      Add a string to identify your Heimdall node
