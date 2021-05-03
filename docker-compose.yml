@@ -10,6 +10,7 @@ services:
     restart: unless-stopped
 
   heimdalld:
+    image: dappnode-polygon_heimdalld:latest
     build:
       args:
         UPSTREAM_VERSION: v0.2.1-mainnet
@@ -39,7 +40,10 @@ services:
     restart: unless-stopped
 
   heimdallr:
+    image: dappnode-polygon_heimdalld:latest
     build:
+      args:
+        UPSTREAM_VERSION: v0.2.1-mainnet
       context: ./build/heimdall
       dockerfile: Dockerfile
     volumes:

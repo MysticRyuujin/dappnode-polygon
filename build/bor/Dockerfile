@@ -7,8 +7,11 @@ RUN apk add --no-cache make gcc musl-dev linux-headers git
 # Make a folder to work in
 RUN mkdir /bor
 
+# Grab UPSTREAM_VERSION from Build Args
+ARG UPSTREAM_VERSION
+
 # Clone the repo to that folder
-RUN git clone ${UPSTREAM_VERSION} https://github.com/maticnetwork/bor.git /bor
+RUN git clone --branch ${UPSTREAM_VERSION} https://github.com/maticnetwork/bor.git /bor
 
 # Build Bor
 RUN cd /bor && make bor
