@@ -8,7 +8,7 @@ RUN apk add --no-cache make gcc musl-dev linux-headers git
 RUN mkdir -p /root/heimdall
 
 # Clone hemidall release into folder
-RUN git clone --branch v0.2.1-mainnet https://github.com/maticnetwork/heimdall.git /root/hemidall
+RUN git clone --branch ${UPSTREAM_VERSION} https://github.com/maticnetwork/heimdall.git /root/hemidall
 
 # change work directory
 WORKDIR /root/heimdall

@@ -11,30 +11,28 @@ services:
 
   heimdalld:
     build:
+      args:
+        UPSTREAM_VERSION: v0.2.1-mainnet
       context: ./build/heimdall
       dockerfile: Dockerfile
-      environment:
-        - MONIKER=DAPPNodler
+    environment:
+      - MONIKER=DAPPNodler
     volumes:
       - heimdall:/root/.heimdalld
     ports:
       - "26656:26656" # P2P
       - "26657:26657" # API
-      - "26658:26658" # ?
     depends_on:
       - rabbitmq
     environment:
-      - moniker=$moniker
+      - moniker=$MONIKER
     command:
       - heimdalld
       - start
-      - --moniker=$moniker              # Node Identifier
-      - --abci=socket                   # Specify abci transport (socket | grpc) (default "socket")
-      - --address=tcp://0.0.0.0:26658   # Listen address? Listen for what?
+      - --moniker=$MONIKER              # Node Identifier
       - --fast_sync                     # Fast blockchain syncing (default true)
       - --p2p.laddr=tcp://0.0.0.0:26656 # p2p listen address
       - --p2p.upnp=false                # Enable/disable UPNP port forwarding
-      - --proxy_app=tcp://0.0.0.0:26658 # IDK Proxy app address? What?
       - --pruning=syncable              # Pruning strategy: syncable, nothing, everything (default "syncable")
       - --rpc.laddr=tcp://0.0.0.0:26657 # RPC listen address
       - --with-tendermint=true          # Run abci app embedded in-process with tendermint (default true)
@@ -62,6 +60,8 @@ services:
 
   bor:
     build:
+      args:
+        UPSTREAM_VERSION: v0.2.4
       context: ./build/bor
       dockerfile: Dockerfile
     volumes:
