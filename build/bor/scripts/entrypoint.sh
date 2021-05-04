@@ -23,6 +23,7 @@ bor \
     --maxpeers=200 \
     --datadir=/datadir \
     --networkid=137 \
+    --syncmode=full
     --miner.gaslimit=200000000 \
     --miner.gastarget=20000000 \
     --bor.heimdall=http://heimdallr:1317 \
