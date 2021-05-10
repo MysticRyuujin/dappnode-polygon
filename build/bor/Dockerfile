@@ -19,7 +19,7 @@ RUN cd /bor && make bor
 # Pull Bor into a second stage deploy alpine container
 FROM alpine:latest
 
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache ca-certificates curl jq
 COPY --from=builder /bor/build/bin/bor /usr/local/bin/
 
 # Set entrypoint

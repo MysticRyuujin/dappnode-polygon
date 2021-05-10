@@ -20,10 +20,13 @@ then
     wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/without-sentry/heimdall/config/genesis.json
 
     echo "overwriting toml config lines"
+    # config.toml
     # CORS
     sed -i 's#^cors_allowed_origins.*#cors_allowed_origins = ["*"]#' config.toml
     # SEEDS
     sed -i 's#^seeds.*#seeds = "f4f605d60b8ffaaf15240564e58a81103510631c@159.203.9.164:26656,4fb1bc820088764a564d4f66bba1963d47d82329@44.232.55.71:26656"#' config.toml
+    
+    # heimdall-config.toml
     # BOR
     sed -i "s#^bor_rpc_url.*#bor_rpc_url = \"http://bor:8540\"#" heimdall-config.toml
     # ETH1

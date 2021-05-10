@@ -18,6 +18,14 @@ then
     bor --datadir /datadir init /datadir/genesis.json
 fi
 
+READY=$(curl -s heimdalld:26657/status | jq '.result.sync_info.catching_up')
+while [[ "$READY" != "false" ]];
+do
+    echo "Waiting for heimdalld to catch up."
+    sleep 30
+    READY=$(curl -s heimdalld.ax101f:26657/status | jq '.result.sync_info.catching_up')
+done
+
 bor \
     --port=30303 \
     --maxpeers=200 \
