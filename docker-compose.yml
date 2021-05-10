@@ -10,14 +10,11 @@ services:
     restart: unless-stopped
 
   heimdalld:
-    image: dappnode-polygon_heimdalld:latest
     build:
       args:
         UPSTREAM_VERSION: v0.2.1-mainnet
       context: ./build/heimdall
       dockerfile: Dockerfile
-    environment:
-      - MONIKER=DAPPNodler
     volumes:
       - heimdall:/root/.heimdalld
     ports:
@@ -26,7 +23,7 @@ services:
     depends_on:
       - rabbitmq
     environment:
-      - moniker=$MONIKER
+      - moniker=DAPPNodler
     command:
       - heimdalld
       - start
@@ -40,7 +37,11 @@ services:
     restart: unless-stopped
 
   heimdallr:
-    image: dappnode-polygon_heimdalld:latest
+    build:
+      args:
+        UPSTREAM_VERSION: v0.2.1-mainnet
+      context: ./build/heimdall
+      dockerfile: Dockerfile
     volumes:
       - heimdall:/root/.heimdalld
     ports:
@@ -71,6 +72,7 @@ services:
         - "30303:30303/udp" # Peers (UDP)
     depends_on:
       - heimdallr
+      - heimdalld
     restart: unless-stopped
 
 volumes:
