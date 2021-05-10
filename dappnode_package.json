@@ -1,0 +1,31 @@
+{
+  "name": "polygon.public.dappnode.eth",
+  "version": "0.1.0",
+  "description": "",
+  "type": "service",
+  "author": "MysticRyuujin (https://github.com/MysticRyuujin)",
+  "contributors": [
+    "androolloyd <opensource@andrewredden.com> (https://github.com/androolloyd)",
+    "golem-factory (https://github.com/golemfactory)"
+  ],
+  "categories": [
+    "Developer tools", "Blockchain", "Communications"
+  ],
+  "keywords": [
+    "golem", "golemfactory"
+  ],
+  "globalEnvs": {
+    "all": true
+  },
+  "backup": [
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/androolloyd/dappnode-golem-node"
+  },
+  "links": {
+    "homepage": "https://polygon.technology/",
+    "gateway": "http://bors.polygon.public.dappnode:56657"
+  },
+  "license": "GPL v3"
+}
