@@ -39,8 +39,7 @@ echo "${SNAPSHOT_DATE}"
 if [ "${BOOTSTRAP}" == 1 ] && [ -n "${SNAPSHOT_DATE}" ];
 then
   echo "downloading snapshot from ${SNAPSHOT_DATE}"
-  wget https://matic-blockchain-snapshots.s3.amazonaws.com/matic-mainnet/heimdall-snapshot-${SNAPSHOT_DATE}.tar.gz
-  tar -xzvf heimdall-snapshot-${SNAPSHOT_DATE}.tar.gz -C ${HEIMDALLD_HOME}/data
+  wget -c https://matic-blockchain-snapshots.s3.amazonaws.com/matic-mainnet/heimdall-snapshot-${SNAPSHOT_DATE}.tar.gz -O - | tar -xz -C ${HEIMDALLD_HOME}/data
 fi
 
 if [ -n "$REST_SERVER" ];
