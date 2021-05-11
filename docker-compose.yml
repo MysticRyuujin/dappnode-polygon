@@ -51,8 +51,8 @@ services:
     ports:
       - "10545:8545"
       - "10546:8546"
-      - "30303:30303"
-      - "30303:30303/udp"
+      - "40303:30303"
+      - "40303:30303/udp"
     depends_on:
       - heimdallr
     restart: unless-stopped
