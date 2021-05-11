@@ -1,80 +1,62 @@
-version: '3.4'
-
+version: "3.4"
 services:
-
   rabbitmq:
     container_name: rabbitmq
-    image: rabbitmq:3-alpine
+    image: "rabbitmq:3-alpine"
     ports:
-      - "5672:5672" # RabbitMQ
+      - "5672:5672"
     restart: unless-stopped
-
   heimdalld:
-    build:
+    build: &ref_0
       args:
         UPSTREAM_VERSION: v0.2.1-mainnet
       context: ./build/heimdall
       dockerfile: Dockerfile
     volumes:
-      - heimdall:/root/.heimdalld
+      - "heimdall:/root/.heimdalld"
     ports:
-      - "26656:26656" # P2P
-      - "26657:26657" # API
+      - "36656:26656"
+      - "36657:26657"
     depends_on:
       - rabbitmq
     environment:
-      - moniker=DAPPNodler
-    command:
-      - heimdalld
-      - start
-      - --moniker=$MONIKER              # Node Identifier
-      - --fast_sync                     # Fast blockchain syncing (default true)
-      - --p2p.laddr=tcp://0.0.0.0:26656 # p2p listen address
-      - --p2p.upnp=false                # Enable/disable UPNP port forwarding
-      - --pruning=syncable              # Pruning strategy: syncable, nothing, everything (default "syncable")
-      - --rpc.laddr=tcp://0.0.0.0:26657 # RPC listen address
-      - --with-tendermint=true          # Run abci app embedded in-process with tendermint (default true)
+      - MONIKER=DAPPNodler
+      - SNAPSHOT_DATE=2021-04-26
+      - BOOTSTRAP=1
     restart: unless-stopped
-
+    image: "heimdalld.polygon.public.dappnode.eth:0.1.0"
   heimdallr:
-    build:
-      args:
-        UPSTREAM_VERSION: v0.2.1-mainnet
-      context: ./build/heimdall
-      dockerfile: Dockerfile
+    environment:
+      - REST_SERVER=1
+    build: *ref_0
     volumes:
-      - heimdall:/root/.heimdalld
+      - "heimdall:/root/.heimdalld"
     ports:
-      - "1317:1317" # Heimdall REST
+      - "1317:1317"
     depends_on:
       - heimdalld
-    command:
-      - heimdalld
-      - rest-server
-      - --chain-id=137               # IDK? The chain ID to connect to? 137?
-      - --laddr=tcp://0.0.0.0:1317   # The address for the server to listen on (default "tcp://0.0.0.0:1317")
-      - --max-open=1000              # The number of maximum open connections (default 1000)
-      - --node=tcp://heimdalld:26657 # Address of the node to connect to (default "tcp://localhost:26657")
-      - --trust-node=true            # Trust connected full node (don't verify proofs for responses) (default true)
     restart: unless-stopped
-
+    image: "heimdallr.polygon.public.dappnode.eth:0.1.0"
   bor:
     build:
       args:
         UPSTREAM_VERSION: v0.2.4
       context: ./build/bor
       dockerfile: Dockerfile
+    environment:
+      - SNAPSHOT_DATE=2021-04-29
+      - BOOTSTRAP=1
     volumes:
-        - bor:/datadir
+      - "bor:/datadir"
     ports:
-        - "8545:8545" # RPC
-        - "30303:30303" # Peers (TCP)
-        - "30303:30303/udp" # Peers (UDP)
+      - "10545:8545"
+      - "10546:8546"
+      - "30303:30303"
+      - "30303:30303/udp"
     depends_on:
       - heimdallr
-      - heimdalld
     restart: unless-stopped
-
+    image: "bor.polygon.public.dappnode.eth:0.1.0"
 volumes:
   heimdall: {}
   bor: {}

@@ -13,17 +13,24 @@ then
 
     echo "downloading launch genesis file"
     wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/without-sentry/bor/genesis.json
-
     echo "initializing bor with genesis file"
     bor --datadir /datadir init /datadir/genesis.json
 fi
+
+if [ "${BOOTSTRAP}" == 1 ] && [ -n "${SNAPSHOT_DATE}" ];
+then
+  echo "downloading snapshot from ${SNAPSHOT_DATE}"
+  wget https://matic-blockchain-snapshots.s3.amazonaws.com/matic-mainnet/bor-snapshot-${SNAPSHOT_DATE}.tar.gz
+  tar -xzvf bor-snapshot-${SNAPSHOT_DATE}.tar.gz -C /datadir
+fi
+
 
 READY=$(curl -s heimdalld:26657/status | jq '.result.sync_info.catching_up')
 while [[ "$READY" != "false" ]];
 do
     echo "Waiting for heimdalld to catch up."
     sleep 30
-    READY=$(curl -s heimdalld.ax101f:26657/status | jq '.result.sync_info.catching_up')
+    READY=$(curl -s heimdalld:26657/status | jq '.result.sync_info.catching_up')
 done
 
 bor \
@@ -43,7 +50,7 @@ bor \
     --http.vhosts="*" \
     --ws \
     --ws.addr=0.0.0.0 \
-    --ws.port=8545 \
+    --ws.port=8546 \
     --ws.api=eth,net,web3,bor \
     --ws.origins="*" \
     --nousb

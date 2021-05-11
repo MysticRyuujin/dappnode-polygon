@@ -22,9 +22,6 @@ ENV GOBIN $GOPATH/bin
 # Make and Install Heimdall
 RUN make install
 
-# Add Volumes?
-VOLUME [ "/root/.heimdalld", "/root/heimdall/logs" ]
-
 # Set entrypoint
 COPY ./scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod u+x /usr/local/bin/entrypoint.sh

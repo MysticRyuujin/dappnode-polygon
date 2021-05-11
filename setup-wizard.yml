@@ -7,3 +7,11 @@ fields:
     title: Node Name
     description: >-
       Add a string to identify your Heimdall node
+
+  - id: BOOTSTRAP
+    target:
+      type: environment
+      name: BOOTSTRAP
+    title: Bootstrap a node from snapshot?
+    description: >-
+      Set this to 1, modify the config later to change snapshot date
