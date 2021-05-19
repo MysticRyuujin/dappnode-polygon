@@ -21,6 +21,7 @@ else
     BERLINBLOCK=$(cat ${BOR_HOME}/genesis.json | jq '.config.berlinBlock')
     if [ ! "$BERLINBLOCK" == "14750000" ];
     then
+        echo "fixing genesis file for Berlin"
         cat ${BOR_HOME}/genesis.json | jq '.config += {"berlinBlock": 14750000}' > ${BOR_HOME}/genesis.json.new
         mv ${BOR_HOME}/genesis.json.new ${BOR_HOME}/genesis.json
         bor --datadir ${BOR_HOME} init ${BOR_HOME}/genesis.json
