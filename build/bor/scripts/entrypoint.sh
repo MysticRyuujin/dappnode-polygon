@@ -12,7 +12,7 @@ then
     cd $BOR_HOME
 
     echo "downloading launch genesis file"
-    wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/without-sentry/bor/genesis.json
+    wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/sentry/sentry/bor/genesis.json
     echo "initializing bor with genesis file"
     bor --datadir /datadir init /datadir/genesis.json
 fi
