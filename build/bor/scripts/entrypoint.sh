@@ -19,7 +19,7 @@ then
 else
     # Check if genesis file contains Berlin Block, update it if not
     BERLINBLOCK=$(cat ${BOR_HOME}/genesis.json | jq '.config.berlinBlock')
-    if [ ! "$BERLINBLOCK" == "14750000" ];
+    if [ ! "${BERLINBLOCK}" == "14750000" ];
     then
         echo "fixing genesis file for Berlin"
         cat ${BOR_HOME}/genesis.json | jq '.config += {"berlinBlock": 14750000}' > ${BOR_HOME}/genesis.json.new
@@ -37,7 +37,7 @@ fi
 
 
 READY=$(curl -s heimdalld:26657/status | jq '.result.sync_info.catching_up')
-while [[ "$READY" != "false" ]];
+while [[ "${READY}" != "false" ]];
 do
     echo "Waiting for heimdalld to catch up."
     sleep 30
