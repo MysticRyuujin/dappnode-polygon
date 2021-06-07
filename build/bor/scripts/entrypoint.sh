@@ -31,7 +31,7 @@ if [ "${BOOTSTRAP}" == 1 ] && [ -n "${SNAPSHOT_DATE}" ];
 then
   echo "downloading snapshot from ${SNAPSHOT_DATE}"
   mkdir -p ${BOR_HOME}/chaindata
-  wget -c https://matic-blockchain-snapshots.s3.amazonaws.com/matic-mainnet/bor-snapshot-${SNAPSHOT_DATE}.tar.gz -O - | tar -xz -C ${BOR_HOME}/chaindata
+  wget -c https://matic-blockchain-snapshots.s3.amazonaws.com/matic-mainnet/bor-fullnode-snapshot-${SNAPSHOT_DATE}.tar.gz -O - | tar -xz -C ${BOR_HOME}/chaindata
 fi
 
 
