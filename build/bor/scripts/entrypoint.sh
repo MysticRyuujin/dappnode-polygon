@@ -11,19 +11,18 @@ if [ ! -f "${BOR_HOME}/genesis.json" ];
 then
     echo "setting up initial configurations"
     cd ${BOR_HOME}
-
     echo "downloading launch genesis file"
     wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/sentry/sentry/bor/genesis.json
     echo "initializing bor with genesis file"
     bor --datadir ${BOR_HOME} init ${BOR_HOME}/genesis.json
 else
-    # Check if genesis file contains Berlin Block, update it if not
-    BERLINBLOCK=$(cat ${BOR_HOME}/genesis.json | jq '.config.berlinBlock')
-    if [ ! "${BERLINBLOCK}" == "14750000" ];
+    # Check if genesis file needs updating
+    BERLINBLOCK=$(grep berlinBlock genesis.json | wc -l)                    # v0.2.5 Update
+    STATESYNCRERCORDS=$(grep overrideStateSyncRecords genesis.json | wc -l) # v0.2.6 Update
+    if [ ${BERLINBLOCK} == 0 ] || [ ${STATESYNCRERCORDS} == 0 ];
     then
-        echo "fixing genesis file for Berlin"
-        cat ${BOR_HOME}/genesis.json | jq '.config += {"berlinBlock": 14750000}' > ${BOR_HOME}/genesis.json.new
-        mv ${BOR_HOME}/genesis.json.new ${BOR_HOME}/genesis.json
+        echo "Updating Genesis File"
+        wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/sentry/sentry/bor/genesis.json
         bor --datadir ${BOR_HOME} init ${BOR_HOME}/genesis.json
     fi
 fi

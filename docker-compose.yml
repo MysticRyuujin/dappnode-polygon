@@ -40,7 +40,7 @@ services:
   bor:
     build:
       args:
-        UPSTREAM_VERSION: v0.2.5
+        UPSTREAM_VERSION: v0.2.6
       context: ./build/bor
       dockerfile: Dockerfile
     environment:
