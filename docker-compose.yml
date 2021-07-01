@@ -21,7 +21,7 @@ services:
       - rabbitmq
     environment:
       - MONIKER=DAPPNodler
-      - SNAPSHOT_DATE=2021-05-31
+      - SNAPSHOT_DATE=2021-06-22
       - BOOTSTRAP=1
     restart: unless-stopped
     image: "heimdalld.polygon.public.dappnode.eth:0.1.0"
@@ -44,7 +44,7 @@ services:
       context: ./build/bor
       dockerfile: Dockerfile
     environment:
-      - SNAPSHOT_DATE=2021-05-26
+      - SNAPSHOT_DATE=2021-06-22
       - BOOTSTRAP=1
     volumes:
       - "bor:/datadir"
