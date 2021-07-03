@@ -21,11 +21,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/androolloyd/dappnode-golem-node"
+    "url": "https://github.com/MysticRyuujin/dappnode-polygon"
   },
   "links": {
     "homepage": "https://polygon.technology/",
-    "gateway": "http://bors.polygon.public.dappnode:56657"
+    "gateway": "http://bors.polygon.public.dappnode:8545"
   },
   "license": "GPL v3"
 }

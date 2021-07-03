@@ -4,7 +4,7 @@ services:
     container_name: rabbitmq
     image: "rabbitmq:3-alpine"
     ports:
-      - "5672:5672"
+      - "5672"
     restart: unless-stopped
   heimdalld:
     build: &ref_0
@@ -23,16 +23,18 @@ services:
       - MONIKER=DAPPNodler
       - SNAPSHOT_DATE=2021-04-26
       - BOOTSTRAP=1
+      - ETH1_RPC_URL="http://fullnode.dappnode:8545"
     restart: unless-stopped
     image: "heimdalld.polygon.public.dappnode.eth:0.1.0"
   heimdallr:
     environment:
       - REST_SERVER=1
+      - ETH1_RPC_URL="http://fullnode.dappnode:8545"
     build: *ref_0
     volumes:
       - "heimdall:/root/.heimdalld"
     ports:
-      - "1317:1317"
+      - "1317"
     depends_on:
       - heimdalld
     restart: unless-stopped
