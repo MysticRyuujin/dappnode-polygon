@@ -6,27 +6,37 @@ set -e
 # Set Bor Home Directory
 BOR_HOME=/datadir
 
-if [ ! -f "$BOR_HOME/genesis.json" ];
+# Check for genesis file and download or update it if needed
+if [ ! -f "${BOR_HOME}/genesis.json" ];
 then
     echo "setting up initial configurations"
-    cd $BOR_HOME
-
+    cd ${BOR_HOME}
     echo "downloading launch genesis file"
-    wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/without-sentry/bor/genesis.json
+    wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/sentry/sentry/bor/genesis.json
     echo "initializing bor with genesis file"
-    bor --datadir /datadir init /datadir/genesis.json
+    bor --datadir ${BOR_HOME} init ${BOR_HOME}/genesis.json
+else
+    # Check if genesis file needs updating
+    BERLINBLOCK=$(grep berlinBlock genesis.json | wc -l)                    # v0.2.5 Update
+    STATESYNCRERCORDS=$(grep overrideStateSyncRecords genesis.json | wc -l) # v0.2.6 Update
+    if [ ${BERLINBLOCK} == 0 ] || [ ${STATESYNCRERCORDS} == 0 ];
+    then
+        echo "Updating Genesis File"
+        wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/sentry/sentry/bor/genesis.json -O genesis.json
+        bor --datadir ${BOR_HOME} init ${BOR_HOME}/genesis.json
+    fi
 fi
 
 if [ "${BOOTSTRAP}" == 1 ] && [ -n "${SNAPSHOT_DATE}" ];
 then
   echo "downloading snapshot from ${SNAPSHOT_DATE}"
   mkdir -p ${BOR_HOME}/chaindata
-  wget -c https://matic-blockchain-snapshots.s3.amazonaws.com/matic-mainnet/bor-snapshot-${SNAPSHOT_DATE}.tar.gz -O - | tar -xz -C /datadir/chaindata
+  wget -c https://matic-blockchain-snapshots.s3.amazonaws.com/matic-mainnet/bor-fullnode-snapshot-${SNAPSHOT_DATE}.tar.gz -O - | tar -xz -C ${BOR_HOME}/chaindata
 fi
 
 
 READY=$(curl -s heimdalld:26657/status | jq '.result.sync_info.catching_up')
-while [[ "$READY" != "false" ]];
+while [[ "${READY}" != "false" ]];
 do
     echo "Waiting for heimdalld to catch up."
     sleep 30

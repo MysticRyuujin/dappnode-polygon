@@ -21,7 +21,7 @@ services:
       - rabbitmq
     environment:
       - MONIKER=DAPPNodler
-      - SNAPSHOT_DATE=2021-04-26
+      - SNAPSHOT_DATE=2021-06-22
       - BOOTSTRAP=1
       - ETH1_RPC_URL="http://fullnode.dappnode:8545"
     restart: unless-stopped
@@ -42,11 +42,11 @@ services:
   bor:
     build:
       args:
-        UPSTREAM_VERSION: v0.2.4
+        UPSTREAM_VERSION: v0.2.6
       context: ./build/bor
       dockerfile: Dockerfile
     environment:
-      - SNAPSHOT_DATE=2021-04-29
+      - SNAPSHOT_DATE=2021-06-22
       - BOOTSTRAP=1
     volumes:
       - "bor:/datadir"
