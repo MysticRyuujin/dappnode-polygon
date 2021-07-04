@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "description": "",
   "type": "service",
+  "chain": "ethereum",
+  "mainService": "bor",
   "author": "MysticRyuujin (https://github.com/MysticRyuujin)",
   "contributors": [
     "androolloyd <opensource@andrewredden.com> (https://github.com/androolloyd)",
