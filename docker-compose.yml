@@ -23,13 +23,13 @@ services:
       - MONIKER=DAPPNodler
       - SNAPSHOT_DATE=2021-06-22
       - BOOTSTRAP=1
-      - ETH1_RPC_URL="http://fullnode.dappnode:8545"
+      - "ETH1_RPC_URL=http://fullnode.dappnode:8545"
     restart: unless-stopped
     image: "heimdalld.polygon.public.dappnode.eth:0.1.0"
   heimdallr:
     environment:
       - REST_SERVER=1
-      - ETH1_RPC_URL="http://fullnode.dappnode:8545"
+      - "ETH1_RPC_URL=http://fullnode.dappnode:8545"
     build: *ref_0
     volumes:
       - "heimdall:/root/.heimdalld"

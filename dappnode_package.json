@@ -6,13 +6,12 @@
   "author": "MysticRyuujin (https://github.com/MysticRyuujin)",
   "contributors": [
     "androolloyd <opensource@andrewredden.com> (https://github.com/androolloyd)",
-    "golem-factory (https://github.com/golemfactory)"
   ],
   "categories": [
     "Developer tools", "Blockchain", "Communications"
   ],
   "keywords": [
-    "golem", "golemfactory"
+    "polygon", "matic"
   ],
   "globalEnvs": {
     "all": true
