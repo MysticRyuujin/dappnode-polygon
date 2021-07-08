@@ -28,7 +28,7 @@ then
     # BOR
     sed -i "s#^bor_rpc_url.*#bor_rpc_url = \"http://bor:8545\"#" heimdall-config.toml
     # ETH1
-    sed -i "s#^eth_rpc_url.*#eth_rpc_url = \"http://${ETH1_RPC_URL}\"#" heimdall-config.toml
+    sed -i "s#^eth_rpc_url.*#eth_rpc_url = \"${ETH1_RPC_URL}\"#" heimdall-config.toml
     # RABBITMQ
     sed -i "s#^amqp_url.*#amqp_url = \"amqp://guest:guest@rabbitmq:5672\"#" heimdall-config.toml
 fi
