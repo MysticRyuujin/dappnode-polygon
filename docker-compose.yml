@@ -25,7 +25,6 @@ services:
       - BOOTSTRAP=1
       - "ETH1_RPC_URL=http://fullnode.dappnode:8545"
     restart: unless-stopped
-    image: "heimdalld.polygon.public.dappnode.eth:0.1.0"
   heimdallr:
     environment:
       - REST_SERVER=1
@@ -38,7 +37,6 @@ services:
     depends_on:
       - heimdalld
     restart: unless-stopped
-    image: "heimdallr.polygon.public.dappnode.eth:0.1.0"
   bor:
     build:
       args:
@@ -58,7 +56,6 @@ services:
     depends_on:
       - heimdallr
     restart: unless-stopped
-    image: "bor.polygon.public.dappnode.eth:0.1.0"
 volumes:
   heimdall: {}
   bor: {}

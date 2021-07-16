@@ -50,4 +50,4 @@ else
   EXEC="heimdalld start --moniker=$MONIKER --fast_sync --p2p.laddr=tcp://0.0.0.0:26656 --p2p.upnp=false --pruning=syncable --rpc.laddr=tcp://0.0.0.0:26657 --with-tendermint=true"
 fi
 
-${EXEC}
+exec ${EXEC}
