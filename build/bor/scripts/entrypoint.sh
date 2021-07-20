@@ -28,11 +28,11 @@ else
     fi
 fi
 
-if [ "${BOOTSTRAP}" == 1 ] && [ -n "${SNAPSHOT_DATE}" ];
+if [ "${BOOTSTRAP}" == 1 ] && [ -n "${SNAPSHOT_DATE}" ] && [ ! -f "${BOR_HOME}/bootstrapped" ];
 then
   echo "downloading snapshot from ${SNAPSHOT_DATE}"
   mkdir -p ${BOR_HOME}/bor/chaindata
-  wget -c https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/bor-pruned-fullnode-snapshot-${SNAPSHOT_DATE}.tar.gz -O - | tar -xz -C ${BOR_HOME}/bor/chaindata
+  wget -c https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/bor-pruned-fullnode-snapshot-${SNAPSHOT_DATE}.tar.gz -O - | tar -xz -C ${BOR_HOME}/bor/chaindata && touch ${BOR_HOME}/bootstrapped
 fi
 
 
