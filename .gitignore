@@ -1,3 +1,4 @@
 # DAppNodeSDK release directories
 build_*
 .idea/
+.vscode/

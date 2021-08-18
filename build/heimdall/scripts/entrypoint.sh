@@ -33,14 +33,11 @@ then
     sed -i "s#^amqp_url.*#amqp_url = \"amqp://guest:guest@rabbitmq:5672\"#" heimdall-config.toml
 fi
 
-echo "$BOOTSTRAP"
-echo "${SNAPSHOT_DATE}"
-
-if [ "${BOOTSTRAP}" == 1 ] && [ -n "${SNAPSHOT_DATE}" ] && [ ! -f "$HEIMDALLD_HOME/bootstrapped" ];
+if [ "${BOOTSTRAP}" == 1 ] && [ -n "${SNAPSHOT_URL}" ] && [ ! -f "$HEIMDALLD_HOME/bootstrapped" ];
 then
-  echo "downloading snapshot from ${SNAPSHOT_DATE}"
+  echo "downloading snapshot from ${SNAPSHOT_URL}"
   mkdir -p ${HEIMDALLD_HOME}/data
-  wget -c https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-${SNAPSHOT_DATE}.tar.gz -O - | tar -xz -C ${HEIMDALLD_HOME}/data && touch ${HEIMDALLD_HOME}/bootstrapped
+  wget -c "${SNAPSHOT_URL}" -O - | tar -xz -C ${HEIMDALLD_HOME}/data && touch ${HEIMDALLD_HOME}/bootstrapped
 fi
 
 if [ -n "$REST_SERVER" ];
