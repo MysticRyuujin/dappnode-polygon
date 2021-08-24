@@ -21,7 +21,7 @@ services:
       - rabbitmq
     environment:
       - MONIKER=DAPPNodler
-      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/bor-pruned-snapshot-2021-08-07.tar.gz
+      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-2021-08-08.tar.gz
       - BOOTSTRAP=1
       - "ETH1_RPC_URL=http://fullnode.dappnode:8545"
     restart: unless-stopped
@@ -40,11 +40,11 @@ services:
   bor:
     build:
       args:
-        UPSTREAM_VERSION: v0.2.6
+        UPSTREAM_VERSION: v0.2.7
       context: ./build/bor
       dockerfile: Dockerfile
     environment:
-      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-2021-08-08.tar.gz
+      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/bor-pruned-snapshot-2021-08-19.tar.gz
       - BOOTSTRAP=1
     volumes:
       - "bor:/datadir"
