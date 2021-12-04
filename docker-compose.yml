@@ -9,7 +9,7 @@ services:
   heimdalld:
     build: &ref_0
       args:
-        UPSTREAM_VERSION: v0.2.3
+        UPSTREAM_VERSION: v0.2.4
       context: ./build/heimdall
       dockerfile: Dockerfile
     volumes:
@@ -21,7 +21,7 @@ services:
       - rabbitmq
     environment:
       - MONIKER=DAPPNodler
-      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-2021-11-02.tar.gz
+      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-2021-11-29.tar.gz
       - BOOTSTRAP=1
       - "ETH1_RPC_URL=http://fullnode.dappnode:8545"
     restart: unless-stopped
@@ -40,11 +40,11 @@ services:
   bor:
     build:
       args:
-        UPSTREAM_VERSION: v0.2.10
+        UPSTREAM_VERSION: v0.2.12-beta3
       context: ./build/bor
       dockerfile: Dockerfile
     environment:
-      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/bor-pruned-snapshot-2021-11-22.tar.gz
+      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/bor-pruned-snapshot-2021-11-28.tar.gz
       - BOOTSTRAP=1
     volumes:
       - "bor:/datadir"
