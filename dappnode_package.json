@@ -8,7 +8,8 @@
   "mainService": "bor",
   "author": "MysticRyuujin <MysticRyuujin@gmail.com> (https://github.com/MysticRyuujin)",
   "contributors": [
-    "androolloyd <opensource@andrewredden.com> (https://github.com/androolloyd)"
+    "androolloyd <opensource@andrewredden.com> (https://github.com/androolloyd)",
+    "AJolly (https://github.com/AJolly)"
   ],
   "categories": [
     "Developer tools", "Blockchain", "Communications"
