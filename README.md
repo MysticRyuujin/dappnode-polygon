@@ -1,47 +1,16 @@
 # Polygon Node DAppNode package
 
-You can use this package without installing it in your DAppNode following these instructions:
+[![DAppNodeStore Available](https://img.shields.io/badge/DAppNodeStore-Available-brightgreen.svg)](http://my.dappnode/#/installer/polygon.public.dappnode.eth)
 
-## Prerequisites
+[![Polygon github](https://img.shields.io/badge/GithubRepo-blue.svg)](https://github.com/maticnetwork/launch) (Official)
 
-- git
+Polygon (aka Matic) is a PoS EVM network. This package deploys a Polygon Full Node (Pruned) that will, by default, download the latest snapshot (at the time of publishing) the package and then sync to the tip of the chain.
 
-  Install [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) command line tool.
+The primary container in this package is `bor` which provides the RPC endpoint on `8545/tcp` - you can map this to a host port if you wish to access it without the VPN or expose it via HTTPS.
 
-- docker
+There is also the PoS container `heimdalld` which has an API at `26657/tcp` - you generally don't need to expose this at all, but if you want to query the status of heimdall remotely without the VPN you can map this port as well. e.g. `http://heimdalld:26657/status`
 
-  Install [docker](https://docs.docker.com/engine/installation). The community edition (docker-ce) will work. In Linux make sure you grant permissions to the current user to use docker by adding current user to docker group, `sudo usermod -aG docker $USER`. Once you update the users group, exit from the current terminal and open a new one to make effect.
-
-- docker-compose
-
-  Install [docker-compose](https://docs.docker.com/compose/install)
-
-**Note**: Make sure you can run `git`, `docker ps`, `docker-compose` without any issue and without sudo command.
-
-## Building
-
-`docker-compose build`
-
-## Running
-
-### Start
-
-`docker-compose up -d`
-
-### View logs
-
-`docker-compose logs -f`
-
-### Stop
-
-`docker-compose down`
-
-## Extra options
-
-You can edit the `docker-compose.yml` and add extra options, such as:
-```
- <TODO:// list all Polygon options>
-```
+By default this package maps ports 40303 (tcp & udp) and 26656/tcp to the DAppNode Host for peering of bor and heimdall respectively.
 
 ## License
 

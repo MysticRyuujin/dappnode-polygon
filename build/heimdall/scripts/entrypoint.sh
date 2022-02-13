@@ -44,7 +44,7 @@ if [ -n "$REST_SERVER" ];
 then
   EXEC="heimdalld rest-server --chain-id=137 --laddr=tcp://0.0.0.0:1317 --max-open=1000 --node=tcp://heimdalld:26657 --trust-node=true"
 else
-  EXEC="heimdalld start --moniker=$MONIKER --fast_sync --p2p.laddr=tcp://0.0.0.0:26656 --p2p.upnp=false --pruning=syncable --rpc.laddr=tcp://0.0.0.0:26657 --with-tendermint=true"
+  EXEC="heimdalld start --moniker=${MONIKER:-DAPPNodler} --fast_sync --p2p.laddr=tcp://0.0.0.0:26656 --p2p.upnp=false --pruning=syncable --rpc.laddr=tcp://0.0.0.0:26657 --with-tendermint=true"
 fi
 
 exec ${EXEC}

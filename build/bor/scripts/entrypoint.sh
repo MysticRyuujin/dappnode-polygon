@@ -12,7 +12,7 @@ then
     echo "setting up initial configurations"
     cd ${BOR_HOME}
     echo "downloading launch genesis file"
-    wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/sentry/validator/bor/genesis.json
+    wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/sentry/sentry/bor/genesis.json
     echo "initializing bor with genesis file"
     bor --datadir ${BOR_HOME} init ${BOR_HOME}/genesis.json
 else
@@ -22,7 +22,7 @@ else
     if [ ${GREPSTRING} == 0 ];
     then
         echo "Updating Genesis File"
-        wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/sentry/validator/bor/genesis.json
+        wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/sentry/sentry/bor/genesis.json
         bor --datadir ${BOR_HOME} init ${BOR_HOME}/genesis.json
     fi
 fi
@@ -35,7 +35,7 @@ then
 fi
 
 
-READY=$(curl -s heimdalld:26657/status | jq '.result.sync_info.catching_up')
+READY=$(curl -s http://heimdalld:26657/status | jq '.result.sync_info.catching_up')
 while [[ "${READY}" != "false" ]];
 do
     echo "Waiting for heimdalld to catch up."
@@ -43,4 +43,9 @@ do
     READY=$(curl -s heimdalld:26657/status | jq '.result.sync_info.catching_up')
 done
 
-exec bor --port=40303 --maxpeers=200 --datadir=/datadir  --networkid=137 --syncmode=full --miner.gaslimit=200000000  --miner.gastarget=20000000 --bor.heimdall=http://heimdallr:1317 --http --http.addr=0.0.0.0 --http.port=8545 --http.api=eth,net,web3,bor --http.corsdomain="*" --http.vhosts="*" --ws --ws.addr=0.0.0.0 --ws.port=8546 --ws.api=eth,net,web3,bor --ws.origins="*" --nousb --bootnodes=enode://0cb82b395094ee4a2915e9714894627de9ed8498fb881cec6db7c65e8b9a5bd7f2f25cc84e71e89d0947e51c76e85d0847de848c7782b13c0255247a6758178c@44.232.55.71:30303,enode://88116f4295f5a31538ae409e4d44ad40d22e44ee9342869e7d68bdec55b0f83c1530355ce8b41fbec0928a7d75a5745d528450d30aec92066ab6ba1ee351d710@159.203.9.164:30303
+exec bor --port=40303 --maxpeers=${MAXPEERS:-200} --datadir=/datadir  --networkid=137 --syncmode=full \
+    --ipcpath ${BOR_HOME}/bor.ipc --bor.heimdall=http://heimdallr:1317 \
+    --txpool.accountslots=16 --txpool.globalslots=131072 --txpool.accountqueue=64 --txpool.globalqueue=131072 \
+    --txpool.lifetime='1h30m0s' --miner.gaslimit=200000000  --miner.gastarget=20000000 --miner.gasprice '30000000000' \
+    --http --http.addr=0.0.0.0 --http.port=8545 --http.api=eth,net,web3,txpool,bor --http.corsdomain="*" --http.vhosts="*" \
+    --ws --ws.addr=0.0.0.0 --ws.port=8545 --ws.api=eth,net,web3,txpool,bor --ws.origins="*"

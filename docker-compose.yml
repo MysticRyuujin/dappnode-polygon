@@ -3,37 +3,32 @@ services:
   rabbitmq:
     container_name: rabbitmq
     image: "rabbitmq:3-alpine"
-    ports:
-      - "5672"
     restart: unless-stopped
   heimdalld:
     build: &ref_0
       args:
-        UPSTREAM_VERSION: v0.2.4
+        UPSTREAM_VERSION: v0.2.5
       context: ./build/heimdall
       dockerfile: Dockerfile
     volumes:
       - "heimdall:/root/.heimdalld"
     ports:
-      - "36656:26656"
-      - "36657:26657"
+      - "26656:26656"
     depends_on:
       - rabbitmq
     environment:
-      - MONIKER=DAPPNodler
-      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-2022-01-24.tar.gz
+      - MONIKER=
+      - SNAPSHOT_URL=	https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-2022-02-07.tar.gz
       - BOOTSTRAP=1
-      - "ETH1_RPC_URL=http://fullnode.dappnode:8545"
+      - ETH1_RPC_URL=http://fullnode.dappnode:8545
     restart: unless-stopped
   heimdallr:
     environment:
       - REST_SERVER=1
-      - "ETH1_RPC_URL=http://fullnode.dappnode:8545"
+      - ETH1_RPC_URL=http://fullnode.dappnode:8545
     build: *ref_0
     volumes:
       - "heimdall:/root/.heimdalld"
-    ports:
-      - "1317"
     depends_on:
       - heimdalld
     restart: unless-stopped
@@ -44,18 +39,18 @@ services:
       context: ./build/bor
       dockerfile: Dockerfile
     environment:
-      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/bor-pruned-snapshot-2022-01-24.tar.gz
+      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/bor-pruned-snapshot-2022-02-08.tar.gz
       - BOOTSTRAP=1
+      - MAXPEERS=
     volumes:
       - "bor:/datadir"
     ports:
-      - "10545:8545"
-      - "10546:8546"
-      - "40303:30303"
-      - "40303:30303/udp"
+      - "40303:40303"
+      - "40303:40303/udp"
     depends_on:
       - heimdallr
     restart: unless-stopped
 volumes:
+  rabbitmq: []
   heimdall: {}
   bor: {}

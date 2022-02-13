@@ -1,11 +1,12 @@
 {
   "name": "polygon.public.dappnode.eth",
-  "version": "0.1.3",
+  "version": "0.2.0",
+  "shortDescription": "Polygon PoS Client Full Node (Pruned)",
   "description": "Polygon is a protocol and a framework for building and connecting Ethereum-compatible blockchain networks. Aggregating scalable solutions on Ethereum supporting a multi-chain Ethereum ecosystem.",
   "type": "service",
   "chain": "ethereum",
   "mainService": "bor",
-  "author": "MysticRyuujin (https://github.com/MysticRyuujin)",
+  "author": "MysticRyuujin <MysticRyuujin@gmail.com> (https://github.com/MysticRyuujin)",
   "contributors": [
     "androolloyd <opensource@andrewredden.com> (https://github.com/androolloyd)"
   ],
@@ -20,13 +21,25 @@
   },
   "backup": [
   ],
+  "exposable": [
+    {
+      "name": "Polygon JSON RPC",
+      "description": "JSON RPC endpoint for Polygon PoS",
+      "serviceName": "bor",
+      "port": 8545
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/MysticRyuujin/dappnode-polygon"
   },
+  "bugs": {
+    "url": "https://github.com/MysticRyuujin/dappnode-polygon/issues"
+  },
   "links": {
     "homepage": "https://polygon.technology/",
-    "gateway": "http://bors.polygon.public.dappnode:8545"
+    "api": "http://heimdalld.polygon.public.dappnode:26657",
+    "gateway": "http://bor.polygon.public.dappnode:8545"
   },
-  "license": "GPL v3"
+  "license": "GLP-3.0"
 }
