@@ -6,7 +6,8 @@ set -e
 # Set Heimdall Home Directory
 HEIMDALLD_HOME=/root/.heimdalld
 
-if [ ! -f "$HEIMDALLD_HOME/config/config.toml" ];
+# If heimdalld container and config file is missing, we need to init and configure it
+if [ ! -n "$REST_SERVER" ] && [ ! -f "$HEIMDALLD_HOME/config/config.toml" ];
 then
     echo "setting up initial configurations"
     heimdalld init
@@ -33,13 +34,15 @@ then
     sed -i "s#^amqp_url.*#amqp_url = \"amqp://guest:guest@rabbitmq:5672\"#" heimdall-config.toml
 fi
 
-if [ "${BOOTSTRAP}" == 1 ] && [ -n "${SNAPSHOT_URL}" ] && [ ! -f "$HEIMDALLD_HOME/bootstrapped" ];
+# If heimdalld container and we need to bootstrap on first run then download the snapshot
+if [ ! -n "$REST_SERVER" ] && [ "${BOOTSTRAP}" == 1 ] && [ -n "${SNAPSHOT_URL}" ] && [ ! -f "$HEIMDALLD_HOME/bootstrapped" ];
 then
   echo "downloading snapshot from ${SNAPSHOT_URL}"
   mkdir -p ${HEIMDALLD_HOME}/data
   wget -c "${SNAPSHOT_URL}" -O - | tar -xz -C ${HEIMDALLD_HOME}/data && touch ${HEIMDALLD_HOME}/bootstrapped
 fi
 
+# Run the correct commands for heimdalld or heimdallr containers
 if [ -n "$REST_SERVER" ];
 then
   EXEC="heimdalld rest-server --chain-id=137 --laddr=tcp://0.0.0.0:1317 --max-open=1000 --node=tcp://heimdalld:26657 --trust-node=true"
