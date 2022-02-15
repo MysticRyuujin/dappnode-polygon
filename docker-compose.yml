@@ -18,7 +18,7 @@ services:
       - rabbitmq
     environment:
       - MONIKER=
-      - SNAPSHOT_URL=	https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-2022-02-07.tar.gz
+      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-2022-02-07.tar.gz
       - BOOTSTRAP=1
       - ETH1_RPC_URL=http://fullnode.dappnode:8545
       - BOOTNODES=
