@@ -7,7 +7,7 @@ services:
   heimdalld:
     build: &ref_0
       args:
-        UPSTREAM_VERSION: v0.2.5
+        UPSTREAM_VERSION: v0.2.8
       context: ./build/heimdall
       dockerfile: Dockerfile
     volumes:
@@ -18,7 +18,7 @@ services:
       - rabbitmq
     environment:
       - MONIKER=
-      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-2022-02-07.tar.gz
+      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-pre-v0.2.8hardfork2022-03-17.tar.gz
       - BOOTSTRAP=1
       - ETH1_RPC_URL=http://fullnode.dappnode:8545
       - BOOTNODES=
@@ -36,11 +36,11 @@ services:
   bor:
     build:
       args:
-        UPSTREAM_VERSION: v0.2.14
+        UPSTREAM_VERSION: v0.2.14-tmp-span-hotfix
       context: ./build/bor
       dockerfile: Dockerfile
     environment:
-      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/bor-pruned-snapshot-2022-02-08.tar.gz
+      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/bor-pruned-snapshot-2022-03-13.tar.gz
       - BOOTSTRAP=1
       - MAXPEERS=
     volumes:
